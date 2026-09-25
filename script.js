@@ -73,3 +73,210 @@ if ("IntersectionObserver" in window) {
 } else {
   revealEls.forEach((el) => el.classList.add("visible"));
 }
+
+// Animierter Hero-Hintergrund: ein Knoten-Netz, durch das Signale laufen
+// und das den Mauszeiger „erfühlt“.
+(function heroNetwork() {
+  const hero = document.getElementById("top");
+  const canvas = document.getElementById("heroCanvas");
+  if (!hero || !canvas || !canvas.getContext) return;
+
+  const ctx = canvas.getContext("2d");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const LINK_DIST = 150;
+  const POINTER_DIST = 190;
+  const COLORS = ["91, 140, 255", "139, 92, 246"];
+  const SIGNAL = "52, 211, 153";
+
+  let width = 0;
+  let height = 0;
+  let nodes = [];
+  let packets = [];
+  let frame = null;
+  let inView = true;
+  let lastPacket = 0;
+  const pointer = { x: 0, y: 0, active: false };
+
+  function createNodes() {
+    const count = Math.round(Math.min(90, Math.max(26, (width * height) / 12000)));
+    nodes = Array.from({ length: count }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 1.4 + 1.1,
+      color: COLORS[Math.random() < 0.6 ? 0 : 1],
+      glow: 0,
+    }));
+    packets = [];
+  }
+
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const widthChanged = Math.abs(rect.width - width) > 1;
+    width = rect.width;
+    height = rect.height;
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // Nur bei neuer Breite neu verteilen (mobile Adressleiste ändert nur die Höhe)
+    if (widthChanged || nodes.length === 0) createNodes();
+    draw(false);
+  }
+
+  function spawnPacket() {
+    const from = nodes[Math.floor(Math.random() * nodes.length)];
+    const neighbours = nodes.filter(
+      (n) => n !== from && Math.hypot(n.x - from.x, n.y - from.y) < LINK_DIST
+    );
+    if (neighbours.length) {
+      const to = neighbours[Math.floor(Math.random() * neighbours.length)];
+      packets.push({ from, to, t: 0 });
+    }
+  }
+
+  function line(x1, y1, x2, y2, style) {
+    ctx.strokeStyle = style;
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+  }
+
+  function draw(move) {
+    ctx.clearRect(0, 0, width, height);
+    ctx.lineWidth = 1;
+
+    if (move) {
+      for (const n of nodes) {
+        n.x += n.vx;
+        n.y += n.vy;
+        if (n.x < -20) n.x = width + 20;
+        else if (n.x > width + 20) n.x = -20;
+        if (n.y < -20) n.y = height + 20;
+        else if (n.y > height + 20) n.y = -20;
+        n.glow *= 0.965;
+      }
+    }
+
+    // Verbindungen zwischen nahen Knoten
+    for (let i = 0; i < nodes.length; i++) {
+      const a = nodes[i];
+      for (let j = i + 1; j < nodes.length; j++) {
+        const b = nodes[j];
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < LINK_DIST) line(a.x, a.y, b.x, b.y, `rgba(${a.color}, ${(1 - d / LINK_DIST) * 0.38})`);
+      }
+    }
+
+    // Fühler zum Mauszeiger
+    if (pointer.active) {
+      for (const n of nodes) {
+        const d = Math.hypot(n.x - pointer.x, n.y - pointer.y);
+        if (d < POINTER_DIST) {
+          const k = 1 - d / POINTER_DIST;
+          line(pointer.x, pointer.y, n.x, n.y, `rgba(${COLORS[0]}, ${k * 0.65})`);
+          n.glow = Math.max(n.glow, k * 0.8);
+          if (move) {
+            n.x += (pointer.x - n.x) * 0.002 * k;
+            n.y += (pointer.y - n.y) * 0.002 * k;
+          }
+        }
+      }
+    }
+
+    // Signale, die von Knoten zu Knoten laufen
+    for (let i = packets.length - 1; i >= 0; i--) {
+      const p = packets[i];
+      if (move) p.t += 0.014;
+      if (p.t >= 1) {
+        p.to.glow = 1;
+        packets.splice(i, 1);
+        continue;
+      }
+      const x = p.from.x + (p.to.x - p.from.x) * p.t;
+      const y = p.from.y + (p.to.y - p.from.y) * p.t;
+      line(p.from.x, p.from.y, x, y, `rgba(${SIGNAL}, 0.35)`);
+      const halo = ctx.createRadialGradient(x, y, 0, x, y, 8);
+      halo.addColorStop(0, `rgba(${SIGNAL}, 0.9)`);
+      halo.addColorStop(1, `rgba(${SIGNAL}, 0)`);
+      ctx.fillStyle = halo;
+      ctx.beginPath();
+      ctx.arc(x, y, 8, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Knoten
+    for (const n of nodes) {
+      if (n.glow > 0.05) {
+        ctx.fillStyle = `rgba(${SIGNAL}, ${n.glow * 0.18})`;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r + 7 * n.glow, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.fillStyle = `rgba(${n.color}, ${0.7 + n.glow * 0.3})`;
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r + n.glow, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function loop(time) {
+    if (time - lastPacket > 450 && packets.length < 6) {
+      spawnPacket();
+      lastPacket = time;
+    }
+    draw(true);
+    frame = requestAnimationFrame(loop);
+  }
+
+  function start() {
+    if (frame === null && inView && !document.hidden && !reducedMotion.matches) {
+      frame = requestAnimationFrame(loop);
+    }
+  }
+
+  function stop() {
+    if (frame !== null) {
+      cancelAnimationFrame(frame);
+      frame = null;
+    }
+  }
+
+  hero.addEventListener("pointermove", (event) => {
+    const rect = canvas.getBoundingClientRect();
+    pointer.x = event.clientX - rect.left;
+    pointer.y = event.clientY - rect.top;
+    pointer.active = true;
+  });
+  hero.addEventListener("pointerleave", () => {
+    pointer.active = false;
+  });
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      if (inView) start();
+      else stop();
+    }).observe(hero);
+  }
+
+  document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
+  if (reducedMotion.addEventListener) {
+    reducedMotion.addEventListener("change", () => {
+      stop();
+      draw(false);
+      start();
+    });
+  }
+
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(resize, 150);
+  });
+
+  resize();
+  start();
+})();

@@ -33,7 +33,7 @@ window.addEventListener("scroll", onScroll, { passive: true });
 // Elemente beim Scrollen einblenden (gestaffelt innerhalb von Gruppen)
 const revealEls = document.querySelectorAll(".reveal");
 
-document.querySelectorAll(".cards, .steps, .hero-copy").forEach((group) => {
+document.querySelectorAll(".cards, .steps, .principles, .hero-copy").forEach((group) => {
   group.querySelectorAll(".reveal").forEach((el, i) => {
     el.style.setProperty("--reveal-delay", `${i * 0.08}s`);
   });

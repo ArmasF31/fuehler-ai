@@ -23,11 +23,18 @@ python -m http.server 8000
 
 und dann `http://localhost:8000` aufrufen.
 
+## Änderungen an CSS/JS
+
+GitHub Pages lässt Dateien 10 Minuten im Browser-Cache. Damit Besucher nach einem
+Update nicht neues HTML mit altem CSS sehen, hängt in `index.html` eine Versionsnummer
+an (`styles.css?v=2`, `script.js?v=2`). Bei Änderungen an `styles.css` oder `script.js`
+diese Nummer einfach um eins erhöhen.
+
 ## Deployment mit GitHub Pages
 
 1. Repo auf GitHub pushen (siehe unten).
 2. Auf GitHub: **Settings → Pages → Source: `Deploy from a branch`**,
-   Branch `main`, Ordner `/ (root)` auswählen, speichern.
+   Branch `master`, Ordner `/ (root)` auswählen, speichern.
 3. Nach ein bis zwei Minuten ist die Seite unter
    `https://<dein-github-username>.github.io/<repo-name>/` erreichbar.
 

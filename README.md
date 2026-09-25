@@ -10,7 +10,7 @@ Statische Website (HTML/CSS/JS, kein Build-Schritt nötig) — läuft direkt üb
 
 - `index.html` — Seiteninhalt
 - `styles.css` — Design
-- `script.js` — Mobile-Navigation, Scroll-Animationen, aktiver Menüpunkt, animierter Hero-Hintergrund, dynamisches Jahr im Footer
+- `script.js` — Mobile-Navigation, Scroll-Animationen, aktiver Menüpunkt, animierter Hero-Hintergrund, Posteingang-Demo, dynamisches Jahr im Footer
 - `logo/` — Logo-Dateien (siehe unten)
 - `favicon.svg`, `apple-touch-icon.png`, `og-image.png` — Browser-Icon, iOS-Icon und Vorschaubild für geteilte Links
 - `fonts/` — selbst gehostete Schriften (Inter, Manrope; SIL Open Font License), damit keine Anfragen an Google-Server gehen
@@ -44,7 +44,7 @@ Farben: `#5b8cff` → `#8b5cf6` (Verlauf), Schrift: Manrope ExtraBold.
 
 GitHub Pages lässt Dateien 10 Minuten im Browser-Cache. Damit Besucher nach einem
 Update nicht neues HTML mit altem CSS sehen, hängt in `index.html` eine Versionsnummer
-an (z. B. `styles.css?v=3`, `script.js?v=3`). Bei Änderungen an `styles.css` oder `script.js`
+an (z. B. `styles.css?v=4`, `script.js?v=4`). Bei Änderungen an `styles.css` oder `script.js`
 diese Nummer einfach um eins erhöhen.
 
 ## Deployment mit GitHub Pages

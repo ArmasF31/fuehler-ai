@@ -19,7 +19,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="fonts/inter-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/manrope-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=3">
+<link rel="stylesheet" href="styles.css?v=4">
 <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
@@ -101,7 +101,7 @@
             <span class="inbox-title">Posteingang · Kampagne</span>
             <span class="inbox-status"><span class="pulse pulse-green"></span>KI-Filter aktiv</span>
           </div>
-          <ul class="inbox-list">
+          <ul class="inbox-list" id="inboxList">
             <li class="mail" style="--d:0">
               <span class="avatar a1">JM</span>
               <span class="mail-body"><strong>Julia M.</strong><span>Klingt spannend — wann können wir telefonieren?</span></span>
@@ -124,8 +124,9 @@
             </li>
           </ul>
           <div class="inbox-foot">
-            <span><b>3</b> brauchen eine Antwort</span>
-            <span class="muted"><b>1</b> automatisch abgelegt</span>
+            <span class="bucket" data-cat="yes"><i></i>Interesse <b>3</b></span>
+            <span class="bucket" data-cat="ask"><i></i>Rückfrage <b>1</b></span>
+            <span class="bucket" data-cat="no"><i></i>Abgelegt <b>5</b></span>
           </div>
         </div>
         <div class="float-card">
@@ -422,6 +423,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=3"></script>
+<script src="script.js?v=4"></script>
 </body>
 </html>

@@ -471,6 +471,7 @@ img, svg { max-width: 100%; display: block; }
   border-radius: var(--radius);
   box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   overflow: hidden;
+  position: relative;
 }
 
 .inbox-bar {
@@ -536,6 +537,8 @@ img, svg { max-width: 100%; display: block; }
 .a2 { background: linear-gradient(135deg, #f59e0b, #d97706); }
 .a3 { background: linear-gradient(135deg, #64748b, #475569); }
 .a4 { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+.a5 { background: linear-gradient(135deg, #14b8a6, #0f766e); }
+.a6 { background: linear-gradient(135deg, #ec4899, #be185d); }
 
 .mail-body { display: flex; flex-direction: column; min-width: 0; }
 .mail-body strong { font-size: 0.88rem; font-weight: 600; }
@@ -563,19 +566,129 @@ img, svg { max-width: 100%; display: block; }
 .tag-no { color: var(--text-dim); background: rgba(255, 255, 255, 0.04); border-color: var(--border); }
 
 .inbox-foot {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 14px 18px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 12px 14px;
   border-top: 1px solid var(--border);
   background: rgba(0, 0, 0, 0.15);
-  font-size: 0.8rem;
-  color: var(--text);
+  font-size: 0.78rem;
+  color: var(--text-muted);
 }
 
-.inbox-foot b { color: var(--green); }
-.inbox-foot .muted { color: var(--text-dim); }
-.inbox-foot .muted b { color: var(--text-muted); }
+/* Kategorie-Ordner, in die Mails einsortiert werden */
+.bucket {
+  --c: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 7px 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  white-space: nowrap;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.bucket[data-cat="ask"] { --c: var(--amber); }
+.bucket[data-cat="no"] { --c: var(--text-dim); }
+
+.bucket i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c);
+}
+
+.bucket b {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.bucket.bump {
+  border-color: var(--c);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.bucket.bump b { animation: count-bump 0.5s var(--ease); }
+
+@keyframes count-bump {
+  40% { transform: scale(1.35); color: var(--c); }
+}
+
+.bucket b { display: inline-block; }
+
+/* Lebende Zeilen (script.js) */
+.js .mail.live { animation: none; opacity: 1; transform: none; }
+.js .mail.live .tag { animation: tag-in 0.35s var(--ease) forwards; }
+.mail.live { overflow: hidden; transition: opacity 0.4s ease, background 0.2s ease; }
+.mail.live.mail-muted { opacity: 0.45; }
+
+.mail.scanning { position: relative; }
+
+.mail.scanning::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(100deg, transparent 20%, rgba(91, 140, 255, 0.14) 50%, transparent 80%);
+  background-size: 200% 100%;
+  animation: scan 1.1s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes scan {
+  from { background-position: 150% 0; }
+  to { background-position: -50% 0; }
+}
+
+.tag-scan {
+  color: #b9c9ff;
+  background: rgba(91, 140, 255, 0.1);
+  border-color: rgba(91, 140, 255, 0.3);
+}
+
+.tag-scan::after {
+  content: "";
+  display: inline-block;
+  width: 1.1em;
+  text-align: left;
+  animation: dots 1s steps(4) infinite;
+}
+
+@keyframes dots {
+  0% { content: ""; }
+  25% { content: "."; }
+  50% { content: ".."; }
+  75% { content: "..."; }
+}
+
+.mail-body .new-badge {
+  display: inline;
+  overflow: visible;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 700;
+  vertical-align: 1px;
+}
+
+/* Punkt, der von der Mail in ihren Ordner fliegt */
+.fly-dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+}
 
 .float-card {
   position: absolute;

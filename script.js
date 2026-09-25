@@ -280,3 +280,195 @@ if ("IntersectionObserver" in window) {
   resize();
   start();
 })();
+
+// Posteingang-Demo im Hero: neue Mails kommen an, die KI ordnet sie ein,
+// und die älteste Mail wandert in ihren Kategorie-Ordner.
+(function inboxDemo() {
+  const list = document.getElementById("inboxList");
+  const inbox = list && list.closest(".inbox");
+  if (!inbox || !inbox.animate) return;
+
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+  const CATS = {
+    yes: { label: "Interesse", color: "#34d399" },
+    ask: { label: "Rückfrage", color: "#fbbf24" },
+    no: { label: "Absage", color: "#8a94a6" },
+  };
+  const MAILS = [
+    { name: "Anna L.", text: "Gerne nächste Woche — passt Ihnen Dienstag?", cat: "yes", avatar: "a5" },
+    { name: "Frank D.", text: "Abwesenheitsnotiz: bis Montag nicht im Büro", cat: "no", avatar: "a3" },
+    { name: "Markus H.", text: "Funktioniert das auch mit unserem CRM?", cat: "ask", avatar: "a2" },
+    { name: "Sabine W.", text: "Klingt gut — schicken Sie gern Unterlagen!", cat: "yes", avatar: "a6" },
+    { name: "Petra S.", text: "Bitte nehmen Sie mich aus dem Verteiler.", cat: "no", avatar: "a4" },
+    { name: "Nina R.", text: "Können Sie mir ein Angebot schicken?", cat: "yes", avatar: "a1" },
+    { name: "Oliver T.", text: "Wer wäre bei Ihnen der Ansprechpartner?", cat: "ask", avatar: "a5" },
+    { name: "Jan K.", text: "Danke, wir haben schon einen Dienstleister.", cat: "no", avatar: "a2" },
+  ];
+  const MAX_ROWS = 4;
+
+  const buckets = {};
+  inbox.querySelectorAll(".bucket").forEach((b) => {
+    buckets[b.dataset.cat] = b;
+  });
+
+  let nextMail = 0;
+  let timer = null;
+  let inView = true;
+  let ready = false;
+
+  function categoryOf(row) {
+    if (row.dataset.cat) return row.dataset.cat;
+    if (row.querySelector(".tag-yes")) return "yes";
+    if (row.querySelector(".tag-ask")) return "ask";
+    return "no";
+  }
+
+  function createRow(mail) {
+    const initials = mail.name.split(" ").map((part) => part[0]).join("");
+    const row = document.createElement("li");
+    row.className = "mail live scanning";
+    row.dataset.cat = mail.cat;
+    row.innerHTML =
+      `<span class="avatar ${mail.avatar}">${initials}</span>` +
+      `<span class="mail-body"><strong>${mail.name}<span class="new-badge">Neu</span></strong>` +
+      `<span>${mail.text}</span></span>` +
+      `<span class="tag tag-scan">KI liest</span>`;
+    return row;
+  }
+
+  function addMail() {
+    const row = createRow(MAILS[nextMail++ % MAILS.length]);
+    list.prepend(row);
+    const height = row.offsetHeight;
+    row.animate(
+      [
+        { height: "0px", paddingTop: "0px", paddingBottom: "0px", opacity: 0, transform: "translateY(-10px)" },
+        { height: `${height}px`, paddingTop: "12px", paddingBottom: "12px", opacity: 1, transform: "none" },
+      ],
+      { duration: 550, easing: EASE }
+    );
+  }
+
+  function classify(row) {
+    const cat = row.dataset.cat;
+    const tag = row.querySelector(".tag");
+    row.classList.remove("scanning");
+    row.querySelector(".new-badge")?.remove();
+    tag.className = `tag tag-${cat}`;
+    tag.textContent = CATS[cat].label;
+    tag.animate(
+      [
+        { transform: "scale(0.6)", opacity: 0 },
+        { transform: "scale(1.12)", opacity: 1, offset: 0.6 },
+        { transform: "scale(1)", opacity: 1 },
+      ],
+      { duration: 450, easing: EASE }
+    );
+    if (cat === "no") row.classList.add("mail-muted");
+  }
+
+  function bump(bucket) {
+    const count = bucket.querySelector("b");
+    count.textContent = Number(count.textContent) + 1;
+    bucket.classList.remove("bump");
+    void bucket.offsetWidth; // Animation neu starten
+    bucket.classList.add("bump");
+    setTimeout(() => bucket.classList.remove("bump"), 700);
+  }
+
+  function sortOut(row) {
+    const cat = categoryOf(row);
+    const bucket = buckets[cat];
+    const box = inbox.getBoundingClientRect();
+    const from = row.querySelector(".tag").getBoundingClientRect();
+    const to = bucket.querySelector("i").getBoundingClientRect();
+    const x1 = from.left + from.width / 2 - box.left;
+    const y1 = from.top + from.height / 2 - box.top;
+    const x2 = to.left + to.width / 2 - box.left;
+    const y2 = to.top + to.height / 2 - box.top;
+
+    // Farbiger Punkt fliegt in einem Bogen in den Ordner
+    const dot = document.createElement("span");
+    dot.className = "fly-dot";
+    dot.style.background = CATS[cat].color;
+    dot.style.boxShadow = `0 0 14px ${CATS[cat].color}`;
+    inbox.appendChild(dot);
+    dot.animate(
+      [
+        { transform: `translate(${x1}px, ${y1}px) scale(0.6)`, opacity: 0 },
+        { transform: `translate(${x1}px, ${y1}px) scale(1.2)`, opacity: 1, offset: 0.15 },
+        { transform: `translate(${(x1 + x2) / 2 + 40}px, ${(y1 + y2) / 2 - 20}px) scale(1)`, opacity: 1, offset: 0.55 },
+        { transform: `translate(${x2}px, ${y2}px) scale(0.5)`, opacity: 0.9 },
+      ],
+      { duration: 850, easing: "cubic-bezier(0.45, 0, 0.25, 1)" }
+    ).onfinish = () => {
+      dot.remove();
+      bump(bucket);
+    };
+
+    // Zeile rutscht zur Seite und klappt zusammen
+    const height = row.offsetHeight;
+    row.style.overflow = "hidden";
+    row.animate(
+      [
+        { height: `${height}px`, opacity: getComputedStyle(row).opacity, transform: "none" },
+        { height: `${height}px`, opacity: 0, transform: "translateX(30px)", offset: 0.5 },
+        { height: "0px", paddingTop: "0px", paddingBottom: "0px", opacity: 0, transform: "translateX(30px)" },
+      ],
+      { duration: 650, easing: EASE, fill: "forwards" }
+    ).onfinish = () => row.remove();
+  }
+
+  function tick() {
+    const rows = list.querySelectorAll(".mail:not(.leaving)");
+    if (rows.length >= MAX_ROWS) {
+      const oldest = rows[rows.length - 1];
+      oldest.classList.add("leaving");
+      sortOut(oldest);
+    }
+    addMail();
+    timer = setTimeout(() => {
+      const newest = list.querySelector(".mail.scanning");
+      if (newest) classify(newest);
+      timer = setTimeout(tick, 1500);
+    }, 1500);
+  }
+
+  function start() {
+    if (!ready || timer !== null || !inView || document.hidden || reducedMotion.matches) return;
+    // Falls beim Pausieren noch eine Mail „gelesen“ wurde, erst diese einordnen
+    const pending = list.querySelector(".mail.scanning");
+    if (pending) {
+      timer = setTimeout(() => {
+        classify(pending);
+        timer = setTimeout(tick, 1500);
+      }, 800);
+    } else {
+      timer = setTimeout(tick, 1200);
+    }
+  }
+
+  function stop() {
+    clearTimeout(timer);
+    timer = null;
+  }
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      if (inView) start();
+      else stop();
+    }).observe(inbox);
+  }
+  document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
+  if (reducedMotion.addEventListener) {
+    reducedMotion.addEventListener("change", () => (reducedMotion.matches ? stop() : start()));
+  }
+
+  // Erst nach dem Einblenden der Start-Mails loslegen
+  setTimeout(() => {
+    ready = true;
+    start();
+  }, 2200);
+})();

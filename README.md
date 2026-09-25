@@ -10,7 +10,8 @@ Statische Website (HTML/CSS/JS, kein Build-Schritt nötig) — läuft direkt üb
 
 - `index.html` — Seiteninhalt
 - `styles.css` — Design
-- `script.js` — Mobile-Navigation, dynamisches Jahr im Footer
+- `script.js` — Mobile-Navigation, Scroll-Animationen, aktiver Menüpunkt, dynamisches Jahr im Footer
+- `fonts/` — selbst gehostete Schriften (Inter, Manrope; SIL Open Font License), damit keine Anfragen an Google-Server gehen
 
 ## Lokal ansehen
 

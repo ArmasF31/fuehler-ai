@@ -5,71 +5,111 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fühler AI — KI-Automatisierung &amp; E-Mail-Kampagnen für B2C</title>
 <meta name="description" content="Fühler AI: KI-Automatisierung und automatisierte B2C E-Mail-Kampagnen mit intelligenter Antwortfilterung. Von Armas Fühler.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>">
+<meta name="theme-color" content="#07090d">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="Fühler AI — KI-Automatisierung &amp; E-Mail-Kampagnen für B2C">
+<meta property="og:description" content="Automatisierte B2C E-Mail-Kampagnen mit KI-gestützter Antwortfilterung. Von Armas Fühler.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%235b8cff%22/><circle cx=%2216%22 cy=%2220%22 r=%223%22 fill=%22white%22/><path d=%22M10 14a8.5 8.5 0 0 1 12 0M6.5 10.5a13.5 13.5 0 0 1 19 0%22 stroke=%22white%22 stroke-width=%222.4%22 fill=%22none%22 stroke-linecap=%22round%22/></svg>">
+<link rel="preload" href="fonts/inter-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/manrope-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
 
-<header class="site-header">
-  <nav class="nav container">
-    <a href="#top" class="logo">Fühler<span>AI</span></a>
-    <button class="nav-toggle" id="navToggle" aria-label="Menü öffnen" aria-expanded="false">
+<a class="skip-link" href="#main">Zum Inhalt springen</a>
+
+<!-- Wiederverwendbare Icons -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-signal" viewBox="0 0 24 24"><circle cx="12" cy="15" r="2.2" fill="currentColor"/><path d="M7.8 10.8a6 6 0 0 1 8.4 0M4.9 7.9a10 10 0 0 1 14.2 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-flow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/><path d="M10 6.5h4a3 3 0 0 1 3 3V14"/><path d="M15 12l2 2 2-2"/></g></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/></g></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16l-6 7.5V19l-4-2v-4.5z"/><path d="M18.5 2.5l.6 1.4 1.4.6-1.4.6-.6 1.4-.6-1.4-1.4-.6 1.4-.6z" fill="currentColor"/></g></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-3.5 4.5-5 8-5s6.5 1.5 8 5"/></g></symbol>
+</svg>
+
+<header class="site-header" id="siteHeader">
+  <nav class="nav container" aria-label="Hauptnavigation">
+    <a href="#top" class="logo" aria-label="Fühler AI — zum Seitenanfang">
+      <span class="logo-mark"><svg><use href="#i-signal"/></svg></span>
+      <span>Fühler<span class="logo-ai">AI</span></span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navLinks">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="navLinks">
       <li><a href="#leistungen">Leistungen</a></li>
       <li><a href="#ablauf">Ablauf</a></li>
       <li><a href="#ueber-mich">Über mich</a></li>
-      <li><a href="#kontakt" class="btn btn-small">Kontakt</a></li>
+      <li class="nav-cta"><a href="#kontakt" class="btn btn-primary btn-small">Kontakt</a></li>
     </ul>
   </nav>
 </header>
 
-<main>
+<main id="main">
 
   <section id="top" class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
     <div class="container hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">KI-Automatisierung für Freiberufler &amp; kleine Teams</p>
-        <h1>Ihr Postfach denkt mit — bevor Sie überhaupt reinschauen.</h1>
-        <p class="hero-sub">
+        <p class="pill reveal"><span class="pulse"></span>KI-Automatisierung für Freiberufler &amp; kleine Teams</p>
+        <h1 class="reveal">Ihr Postfach <span class="gradient-text">denkt mit</span> — bevor Sie überhaupt reinschauen.</h1>
+        <p class="hero-sub reveal">
           Ich baue automatisierte B2C E-Mail-Kampagnen, die selbstständig laufen —
           inklusive KI-gestützter Antwortfilterung, die Interessenten von Absagen trennt,
           bevor ein Mensch die Nachricht überhaupt sieht.
         </p>
-        <div class="hero-actions">
-          <a href="#kontakt" class="btn btn-primary">Kostenloses Erstgespräch</a>
+        <div class="hero-actions reveal">
+          <a href="#kontakt" class="btn btn-primary">Kostenloses Erstgespräch <svg class="btn-icon"><use href="#i-arrow"/></svg></a>
           <a href="#leistungen" class="btn btn-ghost">Was ich anbiete</a>
         </div>
-        <div class="hero-trust">
-          <span>📡 Automatisierung, die spürt, was zählt.</span>
-        </div>
+        <ul class="hero-points reveal">
+          <li><svg><use href="#i-check"/></svg>Kampagnen laufen selbstständig</li>
+          <li><svg><use href="#i-check"/></svg>KI sortiert Antworten vor</li>
+          <li><svg><use href="#i-check"/></svg>Zugeschnitten auf Ihr Geschäft</li>
+        </ul>
       </div>
-      <div class="hero-visual" aria-hidden="true">
-        <div class="flow-card">
-          <div class="flow-step">
-            <span class="flow-dot dot-1"></span>
-            <div>
-              <strong>E-Mail-Kampagne startet</strong>
-              <p>Zielgruppe wird automatisch angeschrieben</p>
-            </div>
+
+      <div class="hero-visual reveal" aria-hidden="true">
+        <div class="inbox">
+          <div class="inbox-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span class="inbox-title">Posteingang · Kampagne</span>
+            <span class="inbox-status"><span class="pulse pulse-green"></span>KI-Filter aktiv</span>
           </div>
-          <div class="flow-line"></div>
-          <div class="flow-step">
-            <span class="flow-dot dot-2"></span>
-            <div>
-              <strong>KI liest Antworten</strong>
-              <p>Interesse, Absage oder Rückfrage wird erkannt</p>
-            </div>
+          <ul class="inbox-list">
+            <li class="mail" style="--d:0">
+              <span class="avatar a1">JM</span>
+              <span class="mail-body"><strong>Julia M.</strong><span>Klingt spannend — wann können wir telefonieren?</span></span>
+              <span class="tag tag-yes">Interesse</span>
+            </li>
+            <li class="mail" style="--d:1">
+              <span class="avatar a2">TK</span>
+              <span class="mail-body"><strong>Thomas K.</strong><span>Was kostet das Paket für 500 Kontakte?</span></span>
+              <span class="tag tag-ask">Rückfrage</span>
+            </li>
+            <li class="mail mail-muted" style="--d:2">
+              <span class="avatar a3">SB</span>
+              <span class="mail-body"><strong>Sandra B.</strong><span>Danke, aktuell kein Bedarf.</span></span>
+              <span class="tag tag-no">Absage</span>
+            </li>
+            <li class="mail" style="--d:3">
+              <span class="avatar a4">LW</span>
+              <span class="mail-body"><strong>Lukas W.</strong><span>Gerne mehr Infos, bitte!</span></span>
+              <span class="tag tag-yes">Interesse</span>
+            </li>
+          </ul>
+          <div class="inbox-foot">
+            <span><b>3</b> brauchen eine Antwort</span>
+            <span class="muted"><b>1</b> automatisch abgelegt</span>
           </div>
-          <div class="flow-line"></div>
-          <div class="flow-step">
-            <span class="flow-dot dot-3"></span>
-            <div>
-              <strong>Nur Relevantes landet bei Ihnen</strong>
-              <p>Automatisch sortiert, bereit zur Bearbeitung</p>
-            </div>
-          </div>
+        </div>
+        <div class="float-card">
+          <span class="float-icon"><svg><use href="#i-filter"/></svg></span>
+          <span><strong>Nur Relevantes</strong><small>landet bei Ihnen</small></span>
         </div>
       </div>
     </div>
@@ -77,41 +117,58 @@
 
   <section id="leistungen" class="section">
     <div class="container">
-      <p class="eyebrow center">Leistungen</p>
-      <h2 class="section-title center">Automatisierung, die sich rechnet</h2>
-      <p class="section-sub center">
-        Drei Bausteine, einzeln oder als komplettes System — zugeschnitten auf Ihr Geschäft.
-      </p>
+      <header class="section-head reveal">
+        <p class="eyebrow">Leistungen</p>
+        <h2 class="section-title">Automatisierung, die sich rechnet</h2>
+        <p class="section-sub">
+          Drei Bausteine, einzeln oder als komplettes System — zugeschnitten auf Ihr Geschäft.
+        </p>
+      </header>
 
       <div class="cards">
-        <article class="card">
-          <div class="card-icon">⚙️</div>
+        <article class="card reveal">
+          <div class="card-icon"><svg><use href="#i-flow"/></svg></div>
           <h3>KI-Automatisierung</h3>
           <p>
             Wiederkehrende Abläufe in Vertrieb, Verwaltung und Kundenkommunikation
             automatisiere ich mit KI-gestützten Workflows (u. a. n8n) — von der
             Datenanbindung bis zur fertigen End-to-End-Strecke.
           </p>
+          <ul class="card-list">
+            <li><svg><use href="#i-check"/></svg>Workflows mit n8n</li>
+            <li><svg><use href="#i-check"/></svg>Datenanbindung</li>
+            <li><svg><use href="#i-check"/></svg>End-to-End-Strecken</li>
+          </ul>
         </article>
 
-        <article class="card">
-          <div class="card-icon">📧</div>
+        <article class="card card-featured reveal">
+          <div class="card-icon"><svg><use href="#i-mail"/></svg></div>
           <h3>B2C E-Mail-Kampagnen</h3>
           <p>
             Automatisierte Kampagnen, die Endkund:innen zur richtigen Zeit mit der
             richtigen Botschaft erreichen — inklusive Versandsteuerung, Segmentierung
             und Erfolgsmessung.
           </p>
+          <ul class="card-list">
+            <li><svg><use href="#i-check"/></svg>Versandsteuerung</li>
+            <li><svg><use href="#i-check"/></svg>Segmentierung</li>
+            <li><svg><use href="#i-check"/></svg>Erfolgsmessung</li>
+          </ul>
         </article>
 
-        <article class="card">
-          <div class="card-icon">🧠</div>
+        <article class="card reveal">
+          <div class="card-icon"><svg><use href="#i-filter"/></svg></div>
           <h3>Automatische Antwortfilterung</h3>
           <p>
             Eine KI liest eingehende Antworten, erkennt Interesse, Ablehnung oder
             Rückfragen und sortiert automatisch vor — Sie sehen nur, was wirklich
             eine Reaktion braucht.
           </p>
+          <ul class="card-list">
+            <li><svg><use href="#i-check"/></svg>Interesse erkennen</li>
+            <li><svg><use href="#i-check"/></svg>Absagen aussortieren</li>
+            <li><svg><use href="#i-check"/></svg>Rückfragen markieren</li>
+          </ul>
         </article>
       </div>
     </div>
@@ -119,91 +176,107 @@
 
   <section id="ablauf" class="section section-alt">
     <div class="container">
-      <p class="eyebrow center">Ablauf</p>
-      <h2 class="section-title center">So läuft die Zusammenarbeit</h2>
+      <header class="section-head reveal">
+        <p class="eyebrow">Ablauf</p>
+        <h2 class="section-title">So läuft die Zusammenarbeit</h2>
+        <p class="section-sub">Vier klare Schritte — vom ersten Gespräch bis zum laufenden System.</p>
+      </header>
 
-      <div class="steps">
-        <div class="step">
+      <ol class="steps">
+        <li class="step reveal">
           <span class="step-num">01</span>
           <h3>Analyse</h3>
           <p>Wir besprechen Ihren aktuellen Prozess und wo Automatisierung den größten Hebel bringt.</p>
-        </div>
-        <div class="step">
+        </li>
+        <li class="step reveal">
           <span class="step-num">02</span>
           <h3>Konzept</h3>
           <p>Ich entwerfe die Kampagnen- und Automatisierungslogik — abgestimmt auf Ihre Zielgruppe.</p>
-        </div>
-        <div class="step">
+        </li>
+        <li class="step reveal">
           <span class="step-num">03</span>
           <h3>Umsetzung</h3>
           <p>Aufbau der Workflows, E-Mail-Strecken und KI-Antwortfilterung, inkl. Tests.</p>
-        </div>
-        <div class="step">
+        </li>
+        <li class="step reveal">
           <span class="step-num">04</span>
           <h3>Betrieb &amp; Optimierung</h3>
           <p>Laufende Betreuung, Auswertung und Feinjustierung für bessere Ergebnisse.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="ueber-mich" class="section">
+    <div class="container">
+      <div class="about reveal">
+        <div class="about-photo" aria-hidden="true">
+          <span>AF</span>
+        </div>
+        <div class="about-copy">
+          <p class="eyebrow">Über mich</p>
+          <h2 class="section-title">Armas Fühler</h2>
+          <p>
+            Ich bin freiberuflich im Bereich KI-Automatisierung tätig und unterstütze
+            Unternehmen dabei, wiederkehrende Aufgaben in Vertrieb und Kommunikation
+            zuverlässig zu automatisieren — von der ersten E-Mail bis zur intelligenten
+            Auswertung der Antworten.
+          </p>
+          <p>
+            Mein Fokus liegt auf praxisnahen, robusten Lösungen statt Buzzwords:
+            Systeme, die im Alltag tatsächlich Zeit sparen und nachvollziehbar bleiben.
+          </p>
+          <ul class="values">
+            <li><strong>Praxisnah</strong><span>Lösungen für echte Abläufe</span></li>
+            <li><strong>Robust</strong><span>Läuft zuverlässig im Alltag</span></li>
+            <li><strong>Nachvollziehbar</strong><span>Keine Blackbox</span></li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="ueber-mich" class="section about">
-    <div class="container about-grid">
-      <div class="about-photo" aria-hidden="true">AF</div>
-      <div class="about-copy">
-        <p class="eyebrow">Über mich</p>
-        <h2 class="section-title">Armas Fühler</h2>
-        <p>
-          Ich bin freiberuflich im Bereich KI-Automatisierung tätig und unterstütze
-          Unternehmen dabei, wiederkehrende Aufgaben in Vertrieb und Kommunikation
-          zuverlässig zu automatisieren — von der ersten E-Mail bis zur intelligenten
-          Auswertung der Antworten.
-        </p>
-        <p>
-          Mein Fokus liegt auf praxisnahen, robusten Lösungen statt Buzzwords:
-          Systeme, die im Alltag tatsächlich Zeit sparen und nachvollziehbar bleiben.
-        </p>
-      </div>
-    </div>
-  </section>
+  <section id="kontakt" class="section section-contact">
+    <div class="container">
+      <div class="kontakt reveal">
+        <div class="kontakt-copy">
+          <p class="eyebrow">Kontakt</p>
+          <h2 class="section-title">Lassen Sie uns sprechen</h2>
+          <p class="section-sub">
+            Erzählen Sie mir kurz, welchen Prozess Sie automatisieren möchten —
+            ich melde mich zeitnah zurück.
+          </p>
+          <ul class="contact-list">
+            <li>
+              <span class="contact-icon"><svg><use href="#i-mail"/></svg></span>
+              <span><small>E-Mail</small><a href="mailto:stenfue@gmail.com">stenfue@gmail.com</a></span>
+            </li>
+            <li>
+              <span class="contact-icon"><svg><use href="#i-user"/></svg></span>
+              <span><small>Ansprechpartner</small>Armas Fühler</span>
+            </li>
+          </ul>
+        </div>
 
-  <section id="kontakt" class="section section-alt">
-    <div class="container kontakt-grid">
-      <div>
-        <p class="eyebrow">Kontakt</p>
-        <h2 class="section-title">Lassen Sie uns sprechen</h2>
-        <p class="section-sub">
-          Erzählen Sie mir kurz, welchen Prozess Sie automatisieren möchten —
-          ich melde mich zeitnah zurück.
-        </p>
-        <ul class="contact-list">
-          <li>
-            <span>✉️</span>
-            <a href="mailto:stenfue@gmail.com">stenfue@gmail.com</a>
-          </li>
-          <li>
-            <span>👤</span>
-            <span>Armas Fühler</span>
-          </li>
-        </ul>
+        <form class="contact-form" action="mailto:stenfue@gmail.com" method="post" enctype="text/plain">
+          <div class="form-row">
+            <label>
+              Name
+              <input type="text" name="name" autocomplete="name" required>
+            </label>
+            <label>
+              E-Mail
+              <input type="email" name="email" autocomplete="email" required>
+            </label>
+          </div>
+          <label>
+            Nachricht
+            <textarea name="message" rows="5" required placeholder="Was möchten Sie automatisieren?"></textarea>
+          </label>
+          <button type="submit" class="btn btn-primary">Nachricht senden <svg class="btn-icon"><use href="#i-arrow"/></svg></button>
+          <p class="form-hint">Öffnet Ihr E-Mail-Programm mit vorausgefüllter Nachricht an stenfue@gmail.com.</p>
+        </form>
       </div>
-
-      <form class="contact-form" action="mailto:stenfue@gmail.com" method="post" enctype="text/plain">
-        <label>
-          Name
-          <input type="text" name="name" required>
-        </label>
-        <label>
-          E-Mail
-          <input type="email" name="email" required>
-        </label>
-        <label>
-          Nachricht
-          <textarea name="message" rows="5" required placeholder="Was möchten Sie automatisieren?"></textarea>
-        </label>
-        <button type="submit" class="btn btn-primary">Nachricht senden</button>
-        <p class="form-hint">Öffnet Ihr E-Mail-Programm mit vorausgefüllter Nachricht an stenfue@gmail.com.</p>
-      </form>
     </div>
   </section>
 
@@ -211,8 +284,17 @@
 
 <footer class="site-footer">
   <div class="container footer-grid">
-    <span>© <span id="year"></span> Armas Fühler — Fühler AI</span>
-    <a href="mailto:stenfue@gmail.com">stenfue@gmail.com</a>
+    <a href="#top" class="logo logo-small">
+      <span class="logo-mark"><svg><use href="#i-signal"/></svg></span>
+      <span>Fühler<span class="logo-ai">AI</span></span>
+    </a>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="#leistungen">Leistungen</a>
+      <a href="#ablauf">Ablauf</a>
+      <a href="#ueber-mich">Über mich</a>
+      <a href="mailto:stenfue@gmail.com">stenfue@gmail.com</a>
+    </nav>
+    <span class="copyright">© <span id="year"></span> Armas Fühler — Fühler AI</span>
   </div>
 </footer>
 
